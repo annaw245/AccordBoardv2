@@ -62,7 +62,7 @@ const SmoothTransition = () => {
     console.log(mouseLocation)
   }
 
-  const handleTransform = useCallback(() => {
+  const goToDefault = useCallback(() => {
     setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 800 });
   }, [setViewport]);
 
@@ -114,12 +114,12 @@ const SmoothTransition = () => {
     <div className="zoom__controls">
       <button onClick={() => zoomIn({ duration: 800 })}>zoom in</button>
       <button onClick={() => zoomOut({ duration: 800 })}>zoom out</button>
-      <button onClick={handleTransform}>pan to center(0,0,1)</button>
+      <button onClick={goToDefault}>pan to center(0,0,1)</button>
       <button onClick={goToOtherUser}>go to other user</button>
     </div>
     <div className="save_controls">
-        <button onClick={onSave}>save</button>
-        <button onClick={onRestore}>restore</button>
+        {/* <button onClick={onSave}>save</button> */}
+        {/* <button onClick={onRestore}>restore</button> */}
         <button onClick={onAdd}>add node</button>
       </div>
       <div>
@@ -132,6 +132,8 @@ const SmoothTransition = () => {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onNodeMouseEnter={recordMouseLocation}
+      onNodeDragStop={onSave}
+      onPaneClick={onRestore}
       onInit={setRfInstance}
       // onConnect={onConnect}
       fitView
