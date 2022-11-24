@@ -6,13 +6,15 @@ import ReactFlow, {
   Background,
   ReactFlowProvider,
   useReactFlow,
+  useViewport 
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import {Stack} from '@fluentui/react'
 
 import './Flow.css';
 
-const flowKey = 'example-flow';
+const nodesKey = 'flow-nodes';
+const mouseKey = 'flow-mouse';
 const getNodeId = () => `randomnode_${+new Date()}`;
 
 const initialNodes = [
@@ -41,24 +43,48 @@ const SmoothTransition = () => {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   // const onConnect = useCallback((params) => setEdges((eds) => addEdge(params, eds)), []);
   const [rfInstance, setRfInstance] = useState(null);
+  const [mouseInstance, setMouseInstance] = useState(null);
+
+  // const onNodeMouseEnter = (() => {
+  //   // const mouseLocation = {x: e.clientX, y: e.clientY, zoom: 1}
+  //   const mouseLocation = useViewport();
+  //   console.log(e)
+  //   localStorage.setItem(mouseKey, JSON.stringify(mouseLocation));
+  // }, [mouseInstance]);
+
+    
+  const mouseLocation = useViewport();
 
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
+  const recordMouseLocation = () => {
+    localStorage.setItem(mouseKey, JSON.stringify(mouseLocation));
+    console.log(mouseLocation)
+  }
+
   const handleTransform = useCallback(() => {
-    console.log("clicked home")
     setViewport({ x: 0, y: 0, zoom: 1 }, { duration: 800 });
+  }, [setViewport]);
+
+  const goToOtherUser = useCallback(() => {
+    const restoreMouse = async () => {
+      const flow = JSON.parse(localStorage.getItem(mouseKey));
+      setViewport(flow, { duration: 800 });
+    };
+
+    restoreMouse();
   }, [setViewport]);
 
   const onSave = useCallback(() => {
     if (rfInstance) {
       const flow = rfInstance.toObject();
-      localStorage.setItem(flowKey, JSON.stringify(flow));
+      localStorage.setItem(nodesKey, JSON.stringify(flow));
     }
   }, [rfInstance]);
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
-      const flow = JSON.parse(localStorage.getItem(flowKey));
+      const flow = JSON.parse(localStorage.getItem(nodesKey));
 
       if (flow) {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
@@ -85,14 +111,19 @@ const SmoothTransition = () => {
 
   return (     
     <Stack verticalFill = {true}>
-    <button onClick={() => zoomIn({ duration: 800 })}>zoom in</button>
-    <button onClick={() => zoomOut({ duration: 800 })}>zoom out</button>
-    <button onClick={handleTransform}>pan to center(0,0,1)</button>
-
-    <div className="save__controls">
+    <div className="zoom__controls">
+      <button onClick={() => zoomIn({ duration: 800 })}>zoom in</button>
+      <button onClick={() => zoomOut({ duration: 800 })}>zoom out</button>
+      <button onClick={handleTransform}>pan to center(0,0,1)</button>
+      <button onClick={goToOtherUser}>go to other user</button>
+    </div>
+    <div className="save_controls">
         <button onClick={onSave}>save</button>
         <button onClick={onRestore}>restore</button>
         <button onClick={onAdd}>add node</button>
+      </div>
+      <div>
+        Zoom Value: {mouseLocation.zoom}
       </div>
 
     <ReactFlow
@@ -100,6 +131,7 @@ const SmoothTransition = () => {
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
+      onNodeMouseEnter={recordMouseLocation}
       onInit={setRfInstance}
       // onConnect={onConnect}
       fitView

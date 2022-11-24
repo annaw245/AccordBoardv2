@@ -5,7 +5,7 @@ import './App.css';
 function App() {
   return (
     <div className="App">
-      <header className="App-header">React Flow - CRA Example</header>
+      <header className="App-header">AccordBoard</header>
       <Flow />
     </div>
   );

@@ -4,6 +4,6 @@ import App from '.';
 
 test('renders header', () => {
   render(<App />);
-  const headerElement = screen.getByText(/React Flow - CRA Example/i);
+  const headerElement = screen.getByText(/AccordBoard/i);
   expect(headerElement).toBeInTheDocument();
 });
