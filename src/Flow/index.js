@@ -19,23 +19,23 @@ const getNodeId = () => `randomnode_${+new Date()}`;
 
 const initialNodes = [
   {
-    id: '1',
-    type: 'input',
-    data: { label: 'Smooth Transition' },
+    id: '0',
+    type: 'output',
+    data: { label: 'Affinity Topic 1' },
     position: { x: 250, y: 5 },
   },
   {
     id: '2',
     type: 'output',
-    data: { label: 'zoom-in' },
+    data: { label: 'CPEN 442 Topic 2' },
     position: { x: 100, y: 100 },
   },
-  { id: '3', data: { label: 'zoom-out' }, position: { x: 400, y: 100 } },
+  { id: '3', 
+  type: 'output', data: { label: 'Interviews Topic 3' }, position: { x: 400, y: 100 } },
 ];
 
+
 const initialEdges = [
-  { id: 'e1-2', source: '1', target: '2' },
-  { id: 'e1-3', source: '1', target: '3' },
 ];
 
 const SmoothTransition = () => {
