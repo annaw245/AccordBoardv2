@@ -1,4 +1,4 @@
-# React Flow Example App - Create React App
+# AccordBoard
 
 This app was bootstrapped with [`create-react-app`](https://github.com/facebook/create-react-app).
 
@@ -31,3 +31,9 @@ npm run build
 ## Create React App Docs
 
 Please refer to the [Create React App docs](https://facebook.github.io/create-react-app/docs/getting-started) for more information.
+
+
+## References
+
+https://github.com/wbkd/react-flow-example-apps 
+https://reactflow.dev 
