@@ -80,6 +80,7 @@ const SmoothTransition = () => {
   }, [setViewport]);
 
   const onSave = useCallback(() => {
+    console.log("called onSave");
     if (rfInstance) {
       const flow = rfInstance.toObject();
       localStorage.setItem(nodesKey, JSON.stringify(flow));
@@ -87,6 +88,7 @@ const SmoothTransition = () => {
   }, [rfInstance]);
 
   const onRestore = useCallback(() => {
+    console.log("called onRestore");
     const restoreFlow = async () => {
       const flow = JSON.parse(localStorage.getItem(nodesKey));
 
@@ -94,12 +96,12 @@ const SmoothTransition = () => {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
         setNodes(flow.nodes || []);
         setEdges(flow.edges || []);
-        setViewport({ x, y, zoom });
+        // setViewport({ x, y, zoom });
       }
     };
 
     restoreFlow();
-  }, [setNodes, setViewport]);
+  }, [setNodes]);
 
   const onAdd = useCallback(() => {
     const newNode = {
@@ -140,9 +142,9 @@ const SmoothTransition = () => {
       edges={edges}
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
-      onNodeMouseEnter={recordMouseLocation}
+      onPaneClick={recordMouseLocation}
       onNodeDragStop={onSave}
-      onPaneClick={onRestore}
+      onPaneMouseEnter={onRestore}
       onInit={setRfInstance}
       // onConnect={onConnect}
       fitView
