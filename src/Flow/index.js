@@ -1,4 +1,5 @@
 import React, { useState, useCallback } from 'react';
+import Cursor from 'react-cursor-follow'
 import ReactFlow, {
   addEdge,
   useNodesState,
@@ -52,7 +53,10 @@ const SmoothTransition = () => {
   //   localStorage.setItem(mouseKey, JSON.stringify(mouseLocation));
   // }, [mouseInstance]);
 
-    
+  const Component = (props) => {
+    return <Cursor />
+  }  
+  
   const mouseLocation = useViewport();
 
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
@@ -109,6 +113,8 @@ const SmoothTransition = () => {
     setNodes((nds) => nds.concat(newNode));
   }, [setNodes]);
 
+  var red = "#ff0000";
+
   return (     
     <Stack verticalFill = {true}>
     <div className="zoom__controls">
@@ -124,6 +130,9 @@ const SmoothTransition = () => {
       </div>
       <div>
         Zoom Value: {mouseLocation.zoom}
+      </div>
+      <div>
+      <Cursor hollow duration={0.8} size={45} color={red}/>
       </div>
 
     <ReactFlow
@@ -143,6 +152,7 @@ const SmoothTransition = () => {
       
     </ReactFlow>
     </Stack>
+    
   );
 };
 
