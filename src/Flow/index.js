@@ -11,6 +11,7 @@ import ReactFlow, {
 } from 'reactflow';
 import 'reactflow/dist/style.css';
 import {Stack} from '@fluentui/react'
+import { DefaultButton, PrimaryButton } from '@fluentui/react/lib/Button';
 
 import './Flow.css';
 
@@ -206,15 +207,15 @@ const SmoothTransition = () => {
   return (     
     <Stack verticalFill = {true}>
     <div className="zoom__controls">
-      <button onClick={() => zoomIn({ duration: 800 })}>zoom in</button>
-      <button onClick={() => zoomOut({ duration: 800 })}>zoom out</button>
-      <button onClick={goToDefault}>pan to center(0,0,1)</button>
-      <button onClick={goToOtherUser}>go to other user</button>
+      <PrimaryButton onClick={() => zoomIn({ duration: 800 })}>zoom in</PrimaryButton>
+      <PrimaryButton onClick={() => zoomOut({ duration: 800 })}>zoom out</PrimaryButton>
+      <PrimaryButton onClick={goToDefault}>pan to center</PrimaryButton>
+      <PrimaryButton onClick={goToOtherUser}>find other user</PrimaryButton>
     </div>
     <div className="save_controls">
         {/* <button onClick={onSave}>save</button> */}
         {/* <button onClick={onRestore}>restore</button> */}
-        <button onClick={onAdd}>add node</button>
+        <PrimaryButton onClick={onAdd}>add node</PrimaryButton>
       </div>
       <div>
         Zoom Value: {mouseLocation.zoom}
