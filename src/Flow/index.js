@@ -146,6 +146,7 @@ const SmoothTransition = () => {
   const { setViewport, zoomIn, zoomOut } = useReactFlow();
 
   const recordMouseLocation = () => {
+    console.log("record mouse")
     localStorage.setItem(mouseKey, JSON.stringify(mouseLocation));
     console.log(mouseLocation)
   }
@@ -155,6 +156,7 @@ const SmoothTransition = () => {
   }, [setViewport]);
 
   const goToOtherUser = useCallback(() => {
+    console.log("called go to other user")
     const restoreMouse = async () => {
       const flow = JSON.parse(localStorage.getItem(mouseKey));
       setViewport(flow, { duration: 800 });
@@ -227,6 +229,7 @@ const SmoothTransition = () => {
       onNodesChange={onNodesChange}
       onEdgesChange={onEdgesChange}
       onPaneClick={recordMouseLocation}
+      onMoveEnd={recordMouseLocation}
       onNodeDragStop={onSave}
       onPaneMouseEnter={onRestore}
       onInit={setRfInstance}
